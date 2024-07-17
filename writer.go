@@ -79,6 +79,7 @@ func NewPdfWriter(filename string) (*PdfWriter, error) {
 		}
 		writer.f = f
 		writer.w = bufio.NewWriter(f)
+		defer f.Close()
 	}
 	return writer, nil
 }

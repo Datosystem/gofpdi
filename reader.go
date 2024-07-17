@@ -57,6 +57,7 @@ func NewPdfReader(filename string) (*PdfReader, error) {
 	if err != nil {
 		return nil, errors.Wrap(err, "Failed to obtain file information")
 	}
+	defer f.Close()
 
 	parser := &PdfReader{f: f, sourceFile: filename, nBytes: info.Size()}
 	if err = parser.init(); err != nil {
