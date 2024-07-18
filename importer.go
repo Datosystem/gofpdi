@@ -3,6 +3,7 @@ package gofpdi
 import (
 	"fmt"
 	"io"
+	"os"
 )
 
 // The Importer class to be used by a pdf generation library
@@ -84,6 +85,13 @@ func (this *Importer) SetSourceFile(f string) {
 		writer.SetTplIdOffset(this.tplN)
 		this.writers[this.sourceFile] = writer
 	}
+}
+
+func (this *Importer) CloseSourceFile(f string) {
+	this.readers[f].f.(*os.File).Close()
+	delete(this.readers, f)
+	this.writers[f].f.Close()
+	delete(this.writers, f)
 }
 
 func (this *Importer) SetSourceStream(rs *io.ReadSeeker) {
